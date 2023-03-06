@@ -1,10 +1,8 @@
+
 from django.http import JsonResponse
-import json
+from .models import log
 
 def get_all_logs(request):
-    res = {
-        "success": True,
-        "message": "Function based view: api to get logs"
-    }
-    return JsonResponse(res)
-
+    logs = log.objects.all().values()  
+    logs_list = list(logs)  
+    return JsonResponse(logs_list,safe=False)

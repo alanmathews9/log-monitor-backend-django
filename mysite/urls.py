@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.urls import path
 from django.conf.urls import include
-from home.views import (get_all_logs)
+from home.views import *
 urlpatterns = [
-    path('home/',get_all_logs),
+    path('get_all_logs/',get_all_logs),
 ] 
