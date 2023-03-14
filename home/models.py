@@ -21,4 +21,15 @@ class log(models.Model):
         db_table = 'log'
 
 
+class user(models.Model):
+    id = models.IntegerField
+    email = models.CharField(max_length=30, blank=True, null=True)
+    level = models.CharField(max_length=50, blank=True, null=True)
+    hashed_password = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        managed = False
+        db_table = 'user'
+
+
 
