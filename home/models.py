@@ -21,7 +21,7 @@ class log(models.Model):
         db_table = 'log'
 
 
-class user(models.Model):
+class User(models.Model):
     id = models.IntegerField(primary_key=True)
     email = models.CharField(max_length=30, blank=True, null=True)
     name = models.CharField(max_length=50, blank=True, null=True)

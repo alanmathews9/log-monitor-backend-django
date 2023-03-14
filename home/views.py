@@ -8,4 +8,7 @@ def get_all_logs(request):
     return JsonResponse(logs_list,safe=False)
 
 
-
+def get_all_userinfo(request):
+    users = user.objects.all().values()
+    users_list = list(users)
+    return JsonResponse(users_list, safe=False)
