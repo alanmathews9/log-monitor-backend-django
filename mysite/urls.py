@@ -17,6 +17,7 @@ Including another URLconf
 from django.urls import path
 from django.conf.urls import include
 from home.views import *
+from basic_auth.views import *
 urlpatterns = [
     path('get_all_logs/',get_all_logs),
     path('login/', login),
