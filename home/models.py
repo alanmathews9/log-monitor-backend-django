@@ -21,15 +21,15 @@ class log(models.Model):
         db_table = 'log'
 
 
-class user(models.Model):
-    id = models.IntegerField(primary_key=True)
-    email = models.CharField(max_length=30, blank=True, null=True)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    hashed_password = models.TextField(blank=True, null=True)
+class User(models.Model):
+    email = models.CharField(unique=True, max_length=45)
+    name = models.CharField(max_length=20)
+    hashed_password = models.TextField()
 
     class Meta:
         managed = False
         db_table = 'user'
+        unique_together = (('id', 'email'),)
 
 
 

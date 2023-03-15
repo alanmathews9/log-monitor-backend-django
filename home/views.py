@@ -1,7 +1,7 @@
 
 from django.http import JsonResponse
 from .models import log
-from .models import user
+from .models import User
 def get_all_logs(request):
     logs = log.objects.all().values()  
     logs_list = list(logs)  
@@ -9,6 +9,7 @@ def get_all_logs(request):
 
 
 def get_all_userinfo(request):
-    users = user.objects.all().values()
+    users = User.objects.all().values()
     users_list = list(users)
     return JsonResponse(users_list, safe=False)
+
