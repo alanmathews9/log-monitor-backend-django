@@ -60,7 +60,6 @@ def register_user(request):
         logger.error('Got login request without password field. Request: {}.'.format(request.data))
         return HttpResponse(json.dumps({"type": "RegisterResponse", "status": "failure", "reason": "password id not present"}, default=str), 
                                         content_type="application/json")
-
     name = request.data['name']
     email_id = request.data['email_id']
     password = request.data['password']
