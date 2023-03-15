@@ -19,5 +19,8 @@ from django.conf.urls import include
 from home.views import *
 urlpatterns = [
     path('get_all_logs/',get_all_logs),
-    path('get_all_userinfo/', get_all_userinfo),
+    path('login/', login),
+    path('logout/', logout),
+    path('register_user/', register_user),
+
 ] 
