@@ -29,26 +29,27 @@ class User:
 
 
 def login(email_id, password):
-    try:
-        user_df = UserModel.objects.get(email=email_id)
-    except UserModel.DoesNotExist:
-        logger.warning('No user exists with email {}'.format(email_id))
-        return False, "Incorrect email or password"
+    user_df = UserModel.objects.filter(email=email_id).all()
+    if not user_df:
+        logger.warning('No user exist {}'.format(email_id))
+        return False, "Incorrect email_id or password"
 
-    hashed_password = user_df.hashed_password.encode('utf-8')
-    password = password.encode('utf-8')
+    user_df = user_df.values().first()
+    
+    salt = bcrypt.gensalt()                             
+    password = 'password'.encode('utf-8')
+    hashed_password = bcrypt.hashpw(password, salt)
 
-    if not bcrypt.checkpw(password, hashed_password):
-        logger.warning('Incorrect password for user {}'.format(email_id))
-        return False, "Incorrect email or password"
+    if not bcrypt.hashpw(password, hashed_password):
+        logger.warning('Incorrect password from user {}'.format(email_id))
+        return False, "Incorrect email_id or password"
 
-    user_obj = User(user_df.id, user_df.name, user_df.email)
+    user_obj = User(user_df['id'], user_df['name'], user_df['email'])
     session_id = _generate_session_id()
     while session_id in session_id_to_user_dict:
         session_id = _generate_session_id()
     session_id_to_user_dict[session_id] = user_obj
     return True, session_id
-
 
 def logout(session_id):
     if session_id not in session_id_to_user_dict:
