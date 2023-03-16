@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def login(request):
-    if 'email' not in request.POST:
+    if 'email_id' not in request.POST:
         logger.error('Got login request without email field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "LoginResponse", "status": "failure", "reason": "email id not present"}, default=str), 
                                         content_type="application/json")
@@ -22,10 +22,10 @@ def login(request):
         return HttpResponse(json.dumps({"type": "LoginResponse", "status": "failure", "reason": "password id not present"}, default=str), 
                                         content_type="application/json")
     
-    email = request.POST['email']
+    email_id = request.POST['email_id']
     password = request.POST['password']
 
-    status, msg_or_session_id = userstore.login(email, password)
+    status, msg_or_session_id = userstore.login(email_id, password)
     if status:
        return HttpResponse(json.dumps({"type": "LoginResponse", "status": "success", "session_id": msg_or_session_id}, default=str), 
                                         content_type="application/json")
