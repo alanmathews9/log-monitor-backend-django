@@ -34,13 +34,13 @@ def login(request):
 
 @csrf_exempt
 def logout(request):
-    if 'session_id' not in request.data:
-        logger.error('Got logout request without session_id field. Request: {}.'.format(request.data))
+    if 'session_id' not in request.POST:
+        logger.error('Got logout request without session_id field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "LogOutResponse", "status": "failure", "reason": "session_id not present"}, default=str), 
                                         content_type="application/json")
-    session_id = int(request.data['session_id'])
+    session_id = int(request.POST['session_id'])
     if not userstore.logout(session_id):
-        logger.error('Got logout request with invalid session_id field. Request: {}.'.format(request.data))
+        logger.error('Got logout request with invalid session_id field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "LogOutResponse", "status": "failure", "reason": "invalid session_id"}, default=str), 
                                         content_type="application/json")
     return HttpResponse(json.dumps({"type": "LogOutResponse", "status": "success"}, default=str), content_type="application/json")
