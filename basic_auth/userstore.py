@@ -39,11 +39,8 @@ def login(email_id, password):
     salt = bcrypt.gensalt()                             #modified lines to fix salt error
     password = 'password'.encode('utf-8')               #modified lines to fix salt error
     hashed_password = bcrypt.hashpw(password, salt)     #modified lines to fix salt error
-
-    stored_hash = user_df.hashed_password.encode('utf-8')
-    entered_hash = bcrypt.hashpw(password.encode('utf-8'), stored_hash)
-
-    if entered_hash != stored_hash:
+    
+    if bcrypt.hashpw(password, hashed_password) != hashed_password:
         logger.warning('Incorrect password from user {}'.format(email_id))
         return False, "Incorrect email_id or password"
 
