@@ -48,21 +48,24 @@ def logout(request):
 
 @csrf_exempt
 def register_user(request):
-    if 'name' not in request.data:
-        logger.error('Got login request without name field. Request: {}.'.format(request.data))
+    if 'name' not in request.POST:
+        logger.error(
+            'Got login request without name field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "RegisterResponse", "status": "failure", "reason": "name not present"}, default=str), 
                                         content_type="application/json")
-    if 'email_id' not in request.data:
-        logger.error('Got login request without email field. Request: {}.'.format(request.data))
+    if 'email_id' not in request.POST:
+        logger.error(
+            'Got login request without email field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "RegisterResponse", "status": "failure", "reason": "email id not present"}, default=str), 
                                         content_type="application/json")
-    if 'password' not in request.data:
-        logger.error('Got login request without password field. Request: {}.'.format(request.data))
+    if 'password' not in request.POST:
+        logger.error(
+            'Got login request without password field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "RegisterResponse", "status": "failure", "reason": "password id not present"}, default=str), 
                                         content_type="application/json")
-    name = request.data['name']
-    email_id = request.data['email_id']
-    password = request.data['password']
+    name = request.POST['name']
+    email_id = request.POST['email_id']
+    password = request.POST['password']
 
     status, err_msg = userstore.register(name, email_id, password)
     if status:
