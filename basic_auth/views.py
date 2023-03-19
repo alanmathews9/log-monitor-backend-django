@@ -21,7 +21,6 @@ def login(request):
         logger.error('Got login request without password field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "LoginResponse", "status": "failure", "reason": "password id not present"}, default=str), 
                                         content_type="application/json")
-    
     email_id = request.POST['email_id']
     password = request.POST['password']
 
