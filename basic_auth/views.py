@@ -8,19 +8,18 @@ import bcrypt
 
 logger = logging.getLogger(__name__)
 
-
-# Create your views here.
-
 @csrf_exempt
 def login(request):
+    if 'password' not in request.POST:
+        logger.error(
+            'Got login request without password field. Request: {}.'.format(request.POST))
+        return HttpResponse(json.dumps({"type": "LoginResponse", "status": "failure", "reason": "password id not present"}, default=str),
+                            content_type="application/json")
     if 'email_id' not in request.POST:
         logger.error('Got login request without email field. Request: {}.'.format(request.POST))
         return HttpResponse(json.dumps({"type": "LoginResponse", "status": "failure", "reason": "email id not present"}, default=str), 
                                         content_type="application/json")
-    if 'password' not in request.POST:
-        logger.error('Got login request without password field. Request: {}.'.format(request.POST))
-        return HttpResponse(json.dumps({"type": "LoginResponse", "status": "failure", "reason": "password id not present"}, default=str), 
-                                        content_type="application/json")
+
     email_id = request.POST['email_id']
     password = request.POST['password']
     
