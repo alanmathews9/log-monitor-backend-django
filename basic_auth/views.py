@@ -23,7 +23,7 @@ def login(request):
                                         content_type="application/json")
     email_id = request.POST['email_id']
     password = request.POST['password']
-
+    
     status, msg_or_session_id = userstore.login(email_id, password)
     if status:
        return HttpResponse(json.dumps({"type": "LoginResponse", "status": "success", "session_id": msg_or_session_id}, default=str), 
