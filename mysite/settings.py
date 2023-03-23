@@ -53,10 +53,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'mysite.utils.middleware.MysiteMiddleware.CoffehouseMiddleware',
     'basic_auth.middleware.AuthMiddleware'
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
@@ -77,7 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 ASGI_APPLICATION = 'mysite.asgi.application'
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
