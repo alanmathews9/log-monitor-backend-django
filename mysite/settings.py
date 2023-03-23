@@ -53,8 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mysite.utils.middleware.MysiteMiddleware.CoffehouseMiddleware',
-    'basic_auth.middleware.AuthMiddleware'
+    'basic_auth.middleware.AuthMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
