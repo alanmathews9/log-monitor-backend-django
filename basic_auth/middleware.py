@@ -1,6 +1,6 @@
 from django.utils.deprecation import MiddlewareMixin
 from .userstore import get_user
-from logmonitor import error_msg_handler
+from log_monitor import error_msg_handler
 
 import json
 import logging
