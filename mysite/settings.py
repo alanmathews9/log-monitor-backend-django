@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'home',
     'basic_auth',
     'corsheaders',
-    'log_monitor',
 ]
 
 MIDDLEWARE = [
