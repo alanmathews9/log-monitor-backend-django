@@ -1,13 +1,13 @@
 from django.utils.deprecation import MiddlewareMixin
 from .userstore import get_user
-from basic_auth import error_msg_handler
+from mysite import error_msg_handler
 
 import json
 import logging
 
 logger = logging.getLogger(__name__)
 
-excluse_path_list = ['/login', '/logout', '/register', '/login/', '/logout/', '/register/']
+excluse_path_list = ['/login', '/logout', '/register_user', '/login/', '/logout/', '/register_user/']
 
 class AuthMiddleware(MiddlewareMixin):
     def process_request(self, request):
