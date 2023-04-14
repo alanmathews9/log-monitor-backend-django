@@ -22,4 +22,5 @@ urlpatterns = [
     path('login/', basic_auth.views.login, name="login"),
     path('logout/', basic_auth.views.logout, name ="logout"),
     path('register_user/', basic_auth.views.register_user, name ="register_user"),
+    path('handle_log/', home.views.register_user, name ="handle_log")
 ] 
