@@ -12,14 +12,21 @@ def get_all_logs(request):
 
 @csrf_exempt
 def handle_log(request, log_id):
-    current_user = request.user.email
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    try:
-        l = log.objects.get(id=log_id)
-        l.handled_by = current_user
-        l.handled_time = current_time
-        l.save()
-        response_data = { "status": "success" }
-    except log.DoesNotExist:
-        response_data = { "status": "error", "message": "Log entry not found" }
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    if 'log_id' not in request.data:
+        return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "failure", "reason": "log_id not present" }))
+    if 'comment' not in request.data:
+        return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "failure", "reason": "lcomment not present" }))
+    
+    return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "success" }))
+
+    # current_user = request.user.email
+    # current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # try:
+    #     l = log.objects.get(id=log_id)
+    #     l.handled_by = current_user
+    #     l.handled_time = current_time
+    #     l.save()
+    #     response_data = { "status": "success" }
+    # except log.DoesNotExist:
+    #     response_data = { "status": "error", "message": "Log entry not found" }
+    # return HttpResponse(json.dumps(response_data), content_type="application/json")
