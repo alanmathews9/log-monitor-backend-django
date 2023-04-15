@@ -5,12 +5,9 @@ import basic_auth.userstore as userstore
 import json
 import logging
 import bcrypt
-import datetime
+
 
 logger = logging.getLogger(__name__)
-
-
-# Create your views here.
 
 @csrf_exempt
 def login(request):

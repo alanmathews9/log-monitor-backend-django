@@ -11,17 +11,16 @@ def get_all_logs(request):
     return HttpResponse(json.dumps(response_data, default=str), content_type="application/json")
 
 @csrf_exempt
-def handle_log(request, log_id):
+def handle_log(request):
     if 'log_id' not in request.data:
         return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "failure", "reason": "log_id not present" }))
     if 'comment' not in request.data:
-        return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "failure", "reason": "lcomment not present" }))
+        return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "failure", "reason": "comment not present" }))
     log_id= request.data['log_id']
     comment = request.data['comment']
-    handled_by = request.user.email
-    handled_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    handled_by = request.data['email_id']
+    handled_time = datetime.datetime.now()
     update_log = log.objects.filter(id=log_id).update(handled_by=handled_by, handled_time=handled_time, comment=comment)
     if update_log:
         return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "success" }))
-    
     
