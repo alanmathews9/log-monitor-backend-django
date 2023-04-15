@@ -3,7 +3,8 @@ from django.http import HttpResponse
 import json
 from .models import log
 from django.views.decorators.csrf import csrf_exempt
-import datetime
+import datetime 
+from basic_auth.userstore import User
 
 @csrf_exempt
 def get_all_logs(request):
@@ -18,7 +19,7 @@ def handle_log(request):
         return HttpResponse(json.dumps({"type": "HandleLogResponse", "status": "failure", "reason": "comment not present" }))
     log_id= request.data['log_id']
     comment = request.data['comment']
-    handled_by = request.data['email_id']
+    handled_by = request.User.get_email()
     handled_time = datetime.datetime.now()
     update_log = log.objects.filter(id=log_id).update(handled_by=handled_by, handled_time=handled_time, comment=comment)
     if update_log:
