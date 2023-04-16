@@ -2,10 +2,10 @@
 from django.http import HttpResponse
 import json
 from .models import log
+# from basic_auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 import datetime 
-from basic_auth.userstore import get_email 
-
+from basic_auth.userstore import User
 @csrf_exempt
 def get_all_logs(request):
     response_data = { "logs": list(log.objects.values().all()) }
@@ -21,7 +21,7 @@ def handle_log(request):
                             content_type="application/json")
     log_id= request.data['log_id']
     comment = request.data['comment']
-    handled_by = request.User.email
+    handled_by = request.user.get_email()
     handled_time = datetime.datetime.now()
     update_log = log.objects.filter(id=log_id).update(handled_by=handled_by, handled_time=handled_time, comment=comment)
     if update_log:
