@@ -4,8 +4,8 @@ import threading
 import sys
 from zoneinfo import ZoneInfo
 from datetime import datetime
-from log_monitor.settings import LOG_STRUCTURE_LIST as log_structure_list
-from log_mon.models import Logs
+from mysite.settings import LOG_STRUCTURE_LIST as log_structure_list
+from home.models import log
 
 import signal
 
@@ -48,7 +48,7 @@ class LogReaderThread:
     
     def write_to_db(self):
         timestamp = datetime.strptime(self._values_dict['timestamp'], '%y-%m-%d %H:%M:%S.%f')
-        logs = Logs(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=self._values_dict['application_name'], level=self._values_dict['log_level'], message = self._values_dict['message'])
+        logs = log(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=self._values_dict['application_name'], level=self._values_dict['log_level'], message = self._values_dict['message'])
         logs.save()
         print(self._values_dict['timestamp'])
 
