@@ -48,7 +48,7 @@ class LogReaderThread:
     
     def write_to_db(self):
         timestamp = datetime.strptime(self._values_dict['timestamp'], '%y-%m-%d %H:%M:%S.%f')
-        logs = log(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=self._values_dict['application_name'], level=self._values_dict['log_level'], message = self._values_dict['message'])
+        logs = log(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=self._values_dict['application_name'], level=self._values_dict['level'], message = self._values_dict['message'])
         logs.save()
         print(self._values_dict['timestamp'])
 
