@@ -6,6 +6,10 @@ from .models import log
 from django.views.decorators.csrf import csrf_exempt
 import datetime 
 from basic_auth.userstore import User
+from home.log_reader import start_all_log_reader_threads
+from mysite.settings import LOG_MONITOR_ROOT_DIR as root_dir
+start_all_log_reader_threads(root_dir)
+
 @csrf_exempt
 def get_all_logs(request):
     response_data = { "logs": list(log.objects.values().all()) }
