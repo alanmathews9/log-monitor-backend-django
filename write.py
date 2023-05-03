@@ -29,7 +29,7 @@ def file_writer(file_path):
         if kill_pill:
             break
 
-file_path = "django-log-monitor/mysite/sample_logs/sample_log.log"
+file_path = "sample_logs/sample_log.log"
 t = threading.Thread(target=file_writer, args=(file_path,))
 t.start()
 a = input()
