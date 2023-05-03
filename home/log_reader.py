@@ -57,7 +57,7 @@ def start_all_log_reader_threads(root_dir):
         # Check whether file is in text format or not
         if not file.lower().endswith('.log'):
             continue
-        file_path = f"{root_dir}\sample_log\{file}"
+        file_path = f"{root_dir}\{file}"
         t = LogReaderThread(file_path)
         t.start()
         file_reading_threads.append(t)
