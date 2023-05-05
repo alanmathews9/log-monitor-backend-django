@@ -10,7 +10,7 @@ from django.db import models
 class log(models.Model):
     timestamp = models.DateTimeField()
     application_name = models.CharField(max_length=20)
-    level = models.CharField(max_length=10, blank=True, null=True)
+    level = models.CharField(max_length=20, blank=True, null=True)
     message = models.TextField(blank=True, null=True)
     handled_by = models.CharField(max_length=50, blank=True, null=True)
     handled_time = models.DateTimeField(blank=True, null=True)

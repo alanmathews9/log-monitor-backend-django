@@ -46,15 +46,12 @@ class LogReaderThread:
                     self.write_to_db()
                 self._last_pos = f.tell()
     
-
     def write_to_db(self):
         timestamp = datetime.strptime(self._values_dict['timestamp'], '%y-%m-%d %H:%M:%S.%f')
-        application_name = self._values_dict.get('application_name', '')
-        level = self._values_dict.get('level', '')
-        message = self._values_dict.get('message', '')
-        logs = log(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=application_name, level=level, message=message)
+        logs = log(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=self._values_dict['application_name'], level=self._values_dict['log_level'], message = self._values_dict['message'])
         logs.save()
         print(self._values_dict['timestamp'])
+
 def start_all_log_reader_threads(root_dir):
     for file in os.listdir(root_dir):
         # Check whether file is in text format or not
