@@ -1,0 +1,18 @@
+[23-09-07 10:36:36.255732] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:36:46.259037] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:36:56.261994] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:37:06.265399] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:37:16.266482] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:37:26.268923] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:37:36.270669] [StrategyServer] [CRITICAL] This is a CRITICAL
+[23-09-07 10:37:46.273511] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:37:56.275469] [StrategyServer] [ERROR] This is one error msg
+[23-09-07 10:38:06.277578] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:38:16.279181] [StrategyServer] [ERROR] This is one error msg
+[23-09-07 10:38:26.280042] [StrategyServer] [CRITICAL] This is a CRITICAL
+[23-09-07 10:38:36.281840] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:38:46.283047] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:38:56.284309] [StrategyServer] [ERROR] This is one error msg
+[23-09-07 10:39:06.285364] [StrategyServer] [ERROR] This is one error msg
+[23-09-07 10:39:16.286350] [StrategyServer] [WARNING] This is a warning message
+[23-09-07 10:39:26.288001] [StrategyServer] [ERROR] This is one error msg

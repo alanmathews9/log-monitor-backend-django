@@ -136,7 +136,7 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
 
 
 # Log monitor settings
-LOG_MONITOR_ROOT_DIR = r"C:\Users\User\Desktop\Alan\Projects\django-log-monitor\mysite\sample_logs"
+LOG_MONITOR_ROOT_DIR = r"C:\Users\User\Desktop\Alan\Projects\Log-Monitor\django-log-monitor\mysite\sample_logs"
 
 # Expecting end of the eeach line as mesage
 LOG_STRUCTURE_LIST = ['timestamp', 'application_name', 'log_level']
