@@ -15,6 +15,7 @@ excluse_path_list = ['/login', '/logout', '/register_user', '/login/', '/logout/
 class AuthMiddleware(MiddlewareMixin):
     def process_request(self, request):
         try:
+            # json.loads is used to deserialize json formatted string 
             request.data = json.loads(request.body.decode('utf-8')) # decode the request body and load it as json
         except BaseException as e:
             logger.error('Failed to parse json request {}. Reason: {}'.format(request.body, str(e)))
