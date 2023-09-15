@@ -17,8 +17,8 @@ class log(models.Model):
     comment = models.TextField(blank=True, null=True)
 
     class Meta:
-        managed = False
-        db_table = 'log'
+        managed = False     # managed = False means that Django will not create, modify or delete the table
+        db_table = 'log' 
 
 
 

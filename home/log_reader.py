@@ -20,10 +20,14 @@ class LogReaderThread:
         self._filepath = filepath
         self._values_dict = {}
 
+    # the Thread class is used to create a thread so we can run multiple functions concurrently
+    # the function the thread should execute is the read_log function
+    # the start method is used to start the thread
     def start(self):
-        self._thread = threading.Thread(target=self.read_log, args=())
+        self._thread = threading.Thread(target=self.read_log, args=())  
         self._thread.start()
 
+    # to kill the thread
     def kill(self):
         print('Killing thread...')
         self._kill_pill = True
@@ -46,22 +50,25 @@ class LogReaderThread:
                     self.write_to_db()
                 self._last_pos = f.tell()
     
+    # takes in a dictionary of values (_values_dict) and writes it to the database (log table
     def write_to_db(self):
         timestamp = datetime.strptime(self._values_dict['timestamp'], '%y-%m-%d %H:%M:%S.%f')
         logs = log(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=self._values_dict['application_name'], level=self._values_dict['log_level'], message = self._values_dict['message'])
         logs.save()
         print(self._values_dict['timestamp'])
 
+# starts all the log reader threads for all .log files in the root directory
 def start_all_log_reader_threads(root_dir):
     for file in os.listdir(root_dir):
-        # Check whether file is in text format or not
+        # Check whether file is in correct format of not
         if not file.lower().endswith('.log'):
             continue
         file_path = f"{root_dir}\{file}"
         t = LogReaderThread(file_path)
         t.start()
-        file_reading_threads.append(t)
+        file_reading_threads.append(t)  # append the thread to the list of threads
 
+# it calls the kill method for all threads in file_reading_threads list
 def kill_all_log_reader_threads(signum, stack_frame):
     global file_reading_threads
     for ft in file_reading_threads:
