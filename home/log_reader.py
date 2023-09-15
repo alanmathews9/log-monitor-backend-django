@@ -55,8 +55,9 @@ class LogReaderThread:
     # takes in a dictionary of values (_values_dict) and writes it to the database (log table
     def write_to_db(self):
         timestamp = datetime.strptime(self._values_dict['timestamp'], '%y-%m-%d %H:%M:%S.%f')
+        # create an instance of django model log and save it to logs
         logs = log(timestamp=timestamp.replace(tzinfo=ZoneInfo('Asia/Kolkata')), application_name=self._values_dict['application_name'], level=self._values_dict['log_level'], message = self._values_dict['message'])
-        logs.save()
+        logs.save()                             # save the instance to the database (write to db)
         print(self._values_dict['timestamp'])
 
 # starts all the log reader threads for all .log files in the root directory

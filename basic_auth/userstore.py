@@ -5,7 +5,7 @@ import random
 
 logger = logging.getLogger(__name__)    # logger object to log the errors, but why?
 
-from basic_auth.models import User as UserModel
+from basic_auth.models import User as UserModel # import the User model, call it UserModel to avoid confusion with User class
 
 session_id_to_user_dict = {}    # dictionary to store session_id as key and user object as value
 
@@ -53,25 +53,28 @@ def login(email_id, password):
     session_id_to_user_dict[session_id] = user_obj  # map the session_id to the user object
     return True, session_id
 
+# called by logout view
 def logout(session_id):
-    if session_id not in session_id_to_user_dict:
+    if session_id not in session_id_to_user_dict:   # if its not a valid session_id, return False
         return False
-    del session_id_to_user_dict[session_id]
+    del session_id_to_user_dict[session_id] # delete the session_id from the dictionary and return True
     return True
 
+# called by the register_user view
 def register(name, email_id, password):
-    user_df = UserModel.objects.filter(email=email_id).all()
-    if user_df:
-        logger.warning('User already exist {}'.format(email_id))
+    user_df = UserModel.objects.filter(email=email_id).all()    
+    if user_df:                                                    # if a user with given email exists
+        logger.warning('User already exist {}'.format(email_id))   # log the error and return False
         return False, "User already exist"
     
-    bytes = password.encode('utf-8')
-    salt = bcrypt.gensalt()
-    hash = bcrypt.hashpw(bytes, salt)
-    user = UserModel(name=name, email=email_id, hashed_password=hash)
-    user.save()
-    return True, ""
+    bytes = password.encode('utf-8')               # encode the password
+    salt = bcrypt.gensalt()                        # generate a salt                           
+    hash = bcrypt.hashpw(bytes, salt)              # hash the password with the salt
+    user = UserModel(name=name, email=email_id, hashed_password=hash)   # create an instance of the User model
+    user.save()                                         # save the instance to the database (write to db)
+    return True, "" 
 
+# used to get the user object from the session_id
 def get_user(session_id):
     if session_id in session_id_to_user_dict:
         return session_id_to_user_dict[session_id]
