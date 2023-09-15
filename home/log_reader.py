@@ -36,19 +36,20 @@ class LogReaderThread:
         global log_structure_list
         while not self._kill_pill:
             self._values_dict = {}
-            with open(self._filepath) as f:
-                f.seek(self._last_pos)
-                line = f.readline()
-                while line:
-                    for s in log_structure_list:
+            with open(self._filepath) as f: # open the file
+                f.seek(self._last_pos)      # seek to the last position
+                line = f.readline()         # read the last line
+                while line:     
+                    # parse the line and store the values in a dictionary
+                    for s in log_structure_list:    
                         start = line.find('[')
                         end = line.find(']')
                         self._values_dict[s] = line[start+1:end]
                         line = line[end+1:]
-                    self._values_dict['message'] = line.strip()
+                    self._values_dict['message'] = line.strip() # the remaining part of the line is the message
                     line = f.readline()
-                    self.write_to_db()
-                self._last_pos = f.tell()
+                    self.write_to_db()  # to read values in _values_dict and write it to the database
+                self._last_pos = f.tell()   # update the last position
     
     # takes in a dictionary of values (_values_dict) and writes it to the database (log table
     def write_to_db(self):
@@ -73,6 +74,6 @@ def kill_all_log_reader_threads(signum, stack_frame):
     global file_reading_threads
     for ft in file_reading_threads:
         ft.kill()
-    sys.exit(0)
+    sys.exit(0)     
 
-signal.signal(signal.SIGINT, kill_all_log_reader_threads)
+signal.signal(signal.SIGINT, kill_all_log_reader_threads)   # sets the signal handler for SIGINT signal to kill_all_log_reader_threads function
