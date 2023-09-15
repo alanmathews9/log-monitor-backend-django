@@ -7,7 +7,7 @@ import random
 
 kill_pill = False
 
-def set_kill_pill():
+def set_kill_pill(signum, frame):
     global kill_pill
     kill_pill = True
     sys.exit(0)
