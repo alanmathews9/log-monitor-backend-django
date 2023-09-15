@@ -7,6 +7,9 @@ import random
 
 kill_pill = False   
 
+# WE DONT NEED THREADING HERE BECAUSE WE ARE WRITING TO ONLY 1 FILE THROUGH ONE EXECUTION OF THE SCRIPT
+# BUT WE STILL USE IT HERE 
+
 # to kill the thread, and stop writing to the file
 def set_kill_pill(signum, frame):
     global kill_pill
