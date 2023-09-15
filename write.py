@@ -40,9 +40,9 @@ def file_writer(file_path):
         if kill_pill:           # if kill_pill is True, then break out of the loop and stop writing to the file
             break
 
-file_path = 'sample_logs/' + application +'.log'
-t = threading.Thread(target=file_writer, args=(file_path,))
-t.start()
-a = input()
+file_path = 'sample_logs/' + application +'.log'    # path of the file to which we want to write
+t = threading.Thread(target=file_writer, args=(file_path,)) # create a thread to write to the file
+t.start()   # start the thread
+a = input() # application name
 set_kill_pill()
 # t.join()
