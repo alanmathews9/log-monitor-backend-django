@@ -3,14 +3,15 @@ import bcrypt
 import logging
 import random
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)    # logger object to log the errors, but why?
 
 from basic_auth.models import User as UserModel
 
-session_id_to_user_dict = {}
+session_id_to_user_dict = {}    # dictionary to store session_id as key and user object as value
 
+# to generate a session_id
 def _generate_session_id():
-    return random.randint(1, 2**16) << 32
+    return random.randint(1, 2**16) << 32   # generate a random number between 1 and 2^16 and left shift it by 32 bits
 
 class User:
     def __init__(self, id, name, email):
@@ -27,27 +28,29 @@ class User:
     def get_email(self):
         return self._email
 
-
+# this method is called by login view which passes email_id, password
+# and this method returns True, session_id if login is successful else False, error message
 def login(email_id, password):
-    user_df = UserModel.objects.filter(email=email_id).all()
-    if not user_df:
+    user_df = UserModel.objects.filter(email=email_id).all()    # get the user with the given email_id
+    # if no user with the given email_id log the error and return False
+    if not user_df:                                     
         logger.warning('No user exist {}'.format(email_id))
         return False, "Incorrect email_id or password"
 
-    user_df = user_df.values().first()
-    hashed_password = user_df['hashed_password'][2:-1]
-    hashed_password = hashed_password.encode('utf-8')
-    password = password.encode('utf-8') 
+    user_df = user_df.values().first()  # get the first user from the user_df
+    hashed_password = user_df['hashed_password'][2:-1]  # get the hashed password from the user_df
+    hashed_password = hashed_password.encode('utf-8')   # encode the hashed password
+    password = password.encode('utf-8')                 # encode the password
     
-    if bcrypt.hashpw(password, hashed_password) != hashed_password:
-        logger.warning('Incorrect password from user {}'.format(email_id))
+    if bcrypt.hashpw(password, hashed_password) != hashed_password: # if the encoded password and hashed password don't match
+        logger.warning('Incorrect password from user {}'.format(email_id))  
         return False, "Incorrect email_id or password"
 
-    user_obj = User(user_df['id'], user_df['name'], user_df['email'])
+    user_obj = User(user_df['id'], user_df['name'], user_df['email'])   # create a user object with the user_df values
     session_id = _generate_session_id()
-    while session_id in session_id_to_user_dict:
+    while session_id in session_id_to_user_dict:    # if we get a duplicate session_id, generate a new one
         session_id = _generate_session_id()
-    session_id_to_user_dict[session_id] = user_obj
+    session_id_to_user_dict[session_id] = user_obj  # map the session_id to the user object
     return True, session_id
 
 def logout(session_id):
